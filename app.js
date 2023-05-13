@@ -1,9 +1,11 @@
 const fs = require('fs');
 const path = require('path');
 const https = require('https');
+const React = require('react');
 const moment = require('moment');
 const argon2 = require('argon2');
 const express = require("express");
+const Webcam = require('react-webcam');
 const bodyParser = require('body-parser');
 
 const options = {
@@ -47,8 +49,12 @@ app.get('/',(req, res) =>{
     user.lastLoginDate = new Date();
     fs.writeFileSync(filePath, JSON.stringify(users, null, 2));
   
-    res.status(200).send(`Login successful. Your last login date was ${date}`);
-  });
+    //res.status(200).send(`Login successful. Your last login date was ${date}`);
+    console.log(`Login successful. Your last login date was ${date}`);
+    res.status(200).render('nft.ejs', {
+      root: __dirname,
+      message: `Login successful. Your last login date was ${date}`
+    });  });
 
   app.post("/api/regist", async(req, res) => {
     const { userId, secret, confirmsecret } = req.body;
@@ -84,7 +90,11 @@ app.get('/',(req, res) =>{
     }
   });
   
-const port = 9000;
+  const WebcamComponent = function() {
+    return React.createElement(Webcam, null);
+  }
+
+const port = 8000;
 https.createServer(options, app).listen(port, () => {
   console.log(`App is running on PORT: ${port}.`);
 });

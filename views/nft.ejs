@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>NFT Viewer</title>
+  <style>
+    .container {
+      display: flex;
+    }
+
+    .column {
+      flex: 1;
+      padding: 10px;
+    }
+  </style>
+  <script>
+    function fetchJSON() {
+      var urlInput = document.getElementById('urlInput');
+      var url = urlInput.value;
+
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          var imageUrl = data.image_url;
+          console.log(data);
+
+          var imageElement = document.getElementById('image');
+          imageElement.src = imageUrl;
+
+          var jsonOutput = JSON.stringify(data, null, 2);
+          var jsonElement = document.getElementById('jsonOutput');
+          jsonElement.textContent = jsonOutput;
+        })
+        .catch(error => {
+          console.log('Error:', error);
+        });
+    }
+  </script>
+</head>
+<body>
+  <h1>NFT Viewer</h1>
+  <p><%= message %></p>
+  <label for="urlInput">NFT URL:</label>
+  <input type="text" id="urlInput" placeholder="Enter a URL">
+  <button onclick="fetchJSON()">Obtener NFT</button>
+<p>URL de mi NFT: https://bafkreiaizqguu444nevzo2g5jfvdhpgl6fninwgvbr5kmlid3a3rj62pte.ipfs.nftstorage.link/</p>
+  <div class="container">
+    <div class="column">
+      <h2>NFT</h2>
+      <img id="image" src="" alt="Image">
+    </div>
+    <div class="column">
+      <h2>Metadata</h2>
+      <pre id="jsonOutput"></pre>
+    </div>
+  </div>
+</body>
+</html>

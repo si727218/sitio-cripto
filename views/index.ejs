@@ -44,6 +44,8 @@ span.psw {
   }
 }
 </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcamjs/1.0.26/webcam.min.js"></script>
+<script src="webcam.js"></script>
 </head>
 <body>
 <h2>Sitio Cripto</h2>
@@ -54,11 +56,6 @@ span.psw {
 
     <label for="psw"><b>Password</b></label>
     <input type="password" placeholder="Enter Password" name="secret" required id="psw">
-
-    <!--
-    <label for="token"><b>Token</b></label>
-    <input type="password" placeholder="Enter Token" name="token" required id="token">
-    -->
         <button id='verificar' type="submit" value="verificar" name='verificar'>Iniciar Sesión</button>
     </form>
   </div>
@@ -69,5 +66,24 @@ span.psw {
     </form>
   </div>
 
+  <div class="container">
+    <!--<button onclick="takeSnapshot()">Tomar foto</button>-->
+    <a href="javascript:void(take_snapshot())"><button>Tomar Foto</button></a>
+    <div id="my_result"></div>
+  </div>
+
+  <div id="my_camera" style="width:320px; height:240px;"></div>
+<div id="my_result"></div>
+
+  <script language="JavaScript">
+    Webcam.attach( '#my_camera' );
+    
+    function take_snapshot() {
+      Webcam.snap( function(data_uri) {
+        document.getElementById('my_result').innerHTML = '<img src="'+data_uri+'"/>';
+      } );
+    }
+  </script>
+  
 </body>
 </html>
